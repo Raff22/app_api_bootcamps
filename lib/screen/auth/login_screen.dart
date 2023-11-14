@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:testapp_aoi/screen/Home/home_screen.dart';
 import 'package:testapp_aoi/screen/auth/registration_screen.dart';
 import 'package:testapp_aoi/screen/auth/verification_screen%20copy.dart';
-import 'package:testapp_aoi/screen/auth/widgets_auth/AuthFelid.dart';
+import 'package:testapp_aoi/screen/auth/widgets_auth/auth_felid.dart';
 import 'package:testapp_aoi/screen/auth/widgets_auth/ButtonAuth.dart';
 import 'package:testapp_aoi/utils/extension/navExtension.dart';
 import 'package:testapp_aoi/utils/extension/screenExtension.dart';

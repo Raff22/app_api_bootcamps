@@ -14,6 +14,7 @@ class ButtonAuth extends StatelessWidget {
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
               fixedSize: const Size(250, 45),
+              padding: const EdgeInsets.symmetric(vertical: 15),
               backgroundColor: Colors.black,
               textStyle:
                   const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
