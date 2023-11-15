@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dismissible_tile/flutter_dismissible_tile.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 import 'package:testapp_aoi/screen/Home/widgets/CardEducation.dart';
 import 'package:testapp_aoi/screen/Home/widgets/CardProject.dart';

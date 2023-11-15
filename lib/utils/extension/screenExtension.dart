@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-extension NavExtension on BuildContext {
+extension ScreenExtension on BuildContext {
   double getWidth({double divide = 1}) {
     return MediaQuery.of(this).size.width / divide;
   }

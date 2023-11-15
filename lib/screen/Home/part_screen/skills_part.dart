@@ -22,17 +22,15 @@ class SkillsPartWidget extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: IconButton(
                 onPressed: () {
-                  context.push(view:  AddSkillsScreen());
+                  context.push(view: const AddSkillsScreen());
                 },
                 icon: const Icon(Icons.add_circle_outlined))),
-        CardSkill(
-          skill: "Python",
-          onDeletedSkill: () {
-            print("Python");
-          },
-        ),
         const CardSkill(
+          skill: "Python",
+        ),
+        CardSkill(
           skill: "Flutter developer",
+          onDeletedSkill: () {},
         ),
         const CardSkill(
           skill: "Dart",

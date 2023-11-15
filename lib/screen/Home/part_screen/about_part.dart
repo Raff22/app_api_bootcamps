@@ -10,12 +10,23 @@ class AboutPartWidget extends StatelessWidget {
       this.email = "",
       this.phone = "",
       this.location = "",
-      this.birthday = ""});
+      this.birthday = "",
+      this.labelAbout = "About",
+      this.labelEmail = "Email",
+      this.labelPhone = "Phone Number",
+      this.labelLocation = "Location",
+      this.labelBirthday = "Birthday"});
   final String about;
   final String email;
   final String phone;
   final String location;
   final String birthday;
+
+  final String labelAbout;
+  final String labelEmail;
+  final String labelPhone;
+  final String labelLocation;
+  final String labelBirthday;
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +47,19 @@ class AboutPartWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10)),
             child: Text(about.toString())),
         LabelAbout(
-          title: "Email",
+          title: labelAbout,
           value: email.toString(),
         ),
         LabelAbout(
-          title: "Phone Number",
+          title: labelPhone,
           value: phone.toString(),
         ),
         LabelAbout(
-          title: "Location",
+          title: labelLocation,
           value: location.toString(),
         ),
         LabelAbout(
-          title: "birthday",
+          title: labelBirthday,
           value: birthday.toString(),
         ),
       ],
