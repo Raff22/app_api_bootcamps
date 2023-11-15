@@ -118,12 +118,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
         ButtonAuth(
           onPressed: () {
-            bool isValidation = false;
-            isValidation = validation(keyForm: _nameKey);
-            isValidation = validation(keyForm: _phoneKey);
-            isValidation = validation(keyForm: _emailKey);
-            isValidation = validation(keyForm: _passwordKey);
-            if (isValidation) {
+            List<bool> isValidation = [];
+            isValidation.add(validation(keyForm: _nameKey));
+            isValidation.add(validation(keyForm: _phoneKey));
+            isValidation.add(validation(keyForm: _emailKey));
+            isValidation.add(validation(keyForm: _passwordKey));
+            if (!isValidation.contains(false)) {
               context.pushAndRemoveUntil(
                   view: const VerificationScreen(
                 email: '',

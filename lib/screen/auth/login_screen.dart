@@ -85,10 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         ButtonAuth(
           onPressed: () {
-            bool isValidation = false;
-            isValidation = validation(keyForm: _emailKey);
-            isValidation = validation(keyForm: _passwordKey);
-            if (isValidation) {
+            List<bool> isValidation = [];
+            isValidation.add(validation(keyForm: _emailKey));
+            isValidation.add(validation(keyForm: _passwordKey));
+            if (!isValidation.contains(false)) {
               print("---------");
               context.pushAndRemoveUntil(
                   view: const VerificationScreen(
