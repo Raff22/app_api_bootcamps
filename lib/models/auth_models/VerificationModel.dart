@@ -1,30 +1,32 @@
-class AuthModelSuccess {
-  AuthModelSuccess({
+class VerificationModel {
+  VerificationModel({
     required this.msg,
-    required this.dataAuth,
+    required this.data,
     required this.codeState,
   });
   late final String msg;
-  late final DataAuth dataAuth;
+  late final Data? data;
   late final int codeState;
 
-  AuthModelSuccess.fromJson(Map<String, dynamic> json) {
+  VerificationModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    dataAuth = DataAuth.fromJson(json['data']);
+    // data = json['data'] != {} ? null : Data.fromJson(json['data']);
+    data = (json['data'] as Map).isEmpty ? null : Data.fromJson(json['data']);
+
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['msg'] = msg;
-    data['data'] = dataAuth.toJson();
-    data['codeState'] = codeState;
-    return data;
+    final dataMap = <String, dynamic>{};
+    dataMap['msg'] = msg;
+    dataMap['data'] = data?.toJson();
+    dataMap['codeState'] = codeState;
+    return dataMap;
   }
 }
 
-class DataAuth {
-  DataAuth({
+class Data {
+  Data({
     required this.token,
     required this.expiresAt,
     required this.tokenType,
@@ -37,7 +39,7 @@ class DataAuth {
   late final int expiresIn;
   late final String email;
 
-  DataAuth.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     expiresAt = json['expiresAt'];
     tokenType = json['tokenType'];

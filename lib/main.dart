@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:testapp_aoi/screen/auth/login_screen.dart';
-import 'package:testapp_aoi/screen/auth/registration_screen.dart';
-import 'package:testapp_aoi/screen/auth/verification_screen%20copy.dart';
-import 'package:testapp_aoi/screen/Home/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testapp_aoi/screen/loading_screen.dart';
 
-void main() {
+SharedPreferences? prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(const MainApp());
 }
 

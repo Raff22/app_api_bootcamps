@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:testapp_aoi/models/userModels/about_model.dart';
+import 'package:testapp_aoi/repository/user_method_networking.dart';
 import 'package:testapp_aoi/screen/Home/part_screen/projects_part.dart';
 import 'package:testapp_aoi/screen/Home/part_screen/about_part.dart';
 import 'package:testapp_aoi/screen/Home/part_screen/education_part.dart';
@@ -11,10 +13,22 @@ import 'package:testapp_aoi/utils/Layaout.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:testapp_aoi/utils/method_widget/showBottomSheetCamera.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   CustomSegmentedController<int>? controller =
       CustomSegmentedController(value: 0);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +58,22 @@ class HomeScreen extends StatelessWidget {
             SegmentModel(
                 id: 0,
                 title: const Text("About"),
-                widget: const AboutPartWidget(
-                  about:
-                      "Hello! I'm [Your Name], a dedicated Flutter developer with a profound enthusiasm for crafting seamless and visually appealing mobile applications. My journey in the world of Flutter has equipped me with a versatile skill set, allowing me to bring ideas to life with elegant and efficient code.",
-                  email: "fahad@gmail.com",
-                  phone: "0501231240",
-                  location: "dmamm",
-                  birthday: "10/10/1994",
-                )),
+                widget: FutureBuilder<UserAboutModel?>(
+                    future:
+                        UserMethodNetworking().getAboutMethod(context: context),
+                    builder:
+                        (context, AsyncSnapshot<UserAboutModel?> snapshot) {
+                      if (snapshot.hasData) {
+                        return AboutPartWidget(
+                          about: snapshot.data!.data!.about ?? '----',
+                          email: snapshot.data!.data!.email ?? '----',
+                          phone: snapshot.data!.data!.phone ?? '----',
+                          location: snapshot.data!.data!.location ?? '----',
+                          birthday: snapshot.data!.data!.birthday ?? '----',
+                        );
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    })),
             SegmentModel(
                 id: 1,
                 title: const Text("Education"),

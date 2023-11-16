@@ -1,15 +1,20 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:testapp_aoi/repository/auth_method_networking.dart';
 import 'package:testapp_aoi/screen/auth/login_screen.dart';
-import 'package:testapp_aoi/screen/auth/verification_screen%20copy.dart';
+import 'package:testapp_aoi/screen/auth/verification_screen.dart';
 import 'package:testapp_aoi/screen/auth/widgets_auth/auth_felid.dart';
 import 'package:testapp_aoi/screen/auth/widgets_auth/ButtonAuth.dart';
 import 'package:testapp_aoi/utils/extension/navExtension.dart';
 import 'package:testapp_aoi/utils/extension/screenExtension.dart';
+import 'package:testapp_aoi/utils/method_widget/alertError_widget.dart';
+import 'package:testapp_aoi/utils/method_widget/show_loading_widget.dart';
 import 'package:testapp_aoi/utils/validation/validation_textform.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -117,18 +122,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           },
         ),
         ButtonAuth(
-          onPressed: () {
+          onPressed: () async {
+            loadingWidget(context: context);
             List<bool> isValidation = [];
             isValidation.add(validation(keyForm: _nameKey));
             isValidation.add(validation(keyForm: _phoneKey));
             isValidation.add(validation(keyForm: _emailKey));
             isValidation.add(validation(keyForm: _passwordKey));
+
             if (!isValidation.contains(false)) {
-              context.pushAndRemoveUntil(
-                  view: const VerificationScreen(
-                email: '',
-                type: TypeOfAuth.registration,
-              ));
+              AuthMethodNetworking methodAPI = AuthMethodNetworking();
+              Map<String, dynamic> bodyMap = {
+                "name": _controllerName.text.trim(),
+                "phone": _controllerPhone.text.trim(),
+                "email": _controllerEmail.text.trim(),
+                "password": _controllerPassword.text.trim()
+              };
+              final results = await methodAPI.registrationMethod(body: bodyMap);
+
+              if (results.codeState == 200) {
+                Navigator.pop(context);
+                context.pushAndRemoveUntil(
+                    view: VerificationScreen(
+                  email: _controllerEmail.text.trim(),
+                  type: TypeOfAuth.registration,
+                ));
+              } else {
+                Navigator.pop(context);
+                alertError(context: context, msg: results.msg);
+              }
+            } else {
+              Navigator.pop(context);
             }
           },
         ),

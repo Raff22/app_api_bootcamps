@@ -1,16 +1,16 @@
-class AuthError {
-  AuthError({
+class RegistrationModel {
+  RegistrationModel({
     required this.msg,
     required this.data,
     required this.codeState,
   });
   late final String msg;
-  late final DataErrorAuth data;
+  late final Data data;
   late final int codeState;
 
-  AuthError.fromJson(Map<String, dynamic> json) {
+  RegistrationModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = DataErrorAuth.fromJson(json['data']);
+    data = Data.fromJson(json['data']);
     codeState = json['codeState'];
   }
 
@@ -23,13 +23,19 @@ class AuthError {
   }
 }
 
-class DataErrorAuth {
-  DataErrorAuth();
+class Data {
+  Data({
+    required this.email,
+  });
+  late final String? email;
 
-  DataErrorAuth.fromJson(Map json);
+  Data.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+  }
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
+    data['email'] = email;
     return data;
   }
 }

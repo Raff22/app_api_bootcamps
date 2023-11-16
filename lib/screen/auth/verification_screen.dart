@@ -1,8 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:testapp_aoi/main.dart';
+import 'package:testapp_aoi/repository/auth_method_networking.dart';
 import 'package:testapp_aoi/screen/Home/home_screen.dart';
 import 'package:testapp_aoi/utils/extension/navExtension.dart';
 import 'package:testapp_aoi/utils/extension/screenExtension.dart';
+import 'package:testapp_aoi/utils/method_widget/alertError_widget.dart';
+import 'package:testapp_aoi/utils/method_widget/show_loading_widget.dart';
 
 enum TypeOfAuth { registration, login, rest }
 
@@ -66,8 +72,24 @@ class VerificationScreen extends StatelessWidget {
         ),
         Center(
           child: Pinput(
-            onCompleted: (pin) {
-              context.pushAndRemoveUntil(view: HomeScreen());
+            length: 6,
+            onCompleted: (pin) async {
+              loadingWidget(context: context);
+              AuthMethodNetworking methodAPI = AuthMethodNetworking();
+              Map<String, dynamic> bodyMap = {
+                "otp": pin.toString(),
+                "email": email,
+                "type": type.name
+              };
+              final results = await methodAPI.verificationMethod(body: bodyMap);
+              if (results.codeState == 200) {
+                prefs?.setString("token", results.data!.token);
+                Navigator.pop(context);
+                context.pushAndRemoveUntil(view: HomeScreen());
+              } else {
+                Navigator.pop(context);
+                alertError(context: context, msg: results.msg);
+              }
             },
           ),
         )

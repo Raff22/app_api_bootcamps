@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testapp_aoi/repository/post_user_method_networking.dart';
 import 'package:testapp_aoi/screen/edit/widget/DropMenuWidget.dart';
 import 'package:testapp_aoi/screen/edit/widget/EditTextFelid.dart';
 
@@ -18,7 +19,24 @@ class AddProjectScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                if (controllerName!.text.trim().isNotEmpty &&
+                    controllerDescription!.text.trim().isNotEmpty) {
+                  PostUserMethodNetworking networking =
+                      PostUserMethodNetworking();
+                  Map<String, dynamic> bodyMap = {
+                    "name": controllerName?.text.trim(),
+                    "description": controllerDescription?.text.trim(),
+                    "state": selectedDropMenu
+                  };
+                  print(bodyMap);
+                  await networking.addNewProjectMethod(
+                      context: context, body: bodyMap);
+                  Navigator.pop(
+                    context,
+                  );
+                }
+              },
               icon: const Icon(
                 Icons.upload_sharp,
                 color: Colors.green,
